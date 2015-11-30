@@ -1,0 +1,14 @@
+{
+    "name": "upassist/payments-mollie",
+    "type": "typo3-flow-package",
+    "description": "Add description here",
+    "require": {
+        "typo3/flow": "*",
+        "mollie/mollie-api-php": "1.2.x"
+    },
+    "autoload": {
+        "psr-0": {
+            "UpAssist\\Payments\\Mollie": "Classes"
+        }
+    }
+}
