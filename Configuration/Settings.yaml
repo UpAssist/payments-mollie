@@ -1,0 +1,5 @@
+UpAssist:
+  Payments:
+    Mollie:
+      # Put your API Key here (get this from your Mollie account)
+      apiKey: ''

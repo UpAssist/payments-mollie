@@ -1,0 +1,10 @@
+-
+  name:  'Create Payment and Return Payment Link'
+  uriPattern: 'mollie/{@controller}(/{@action})'
+  defaults:
+    '@package': 'UpAssist.Payments.Mollie'
+    '@controller': 'Payment'
+    '@action': 'create'
+    '@format': 'html'
+  httpMethods: ['GET']
+  appendExceedingArguments: TRUE
