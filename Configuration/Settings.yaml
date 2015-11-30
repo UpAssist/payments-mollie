@@ -3,3 +3,8 @@ UpAssist:
     Mollie:
       # Put your API Key here (get this from your Mollie account)
       apiKey: ''
+      default:
+        # Used if no redirecturl is set when called via API
+        redirectUrl: ''
+        # Used if no description is set when called via API
+        description: ''

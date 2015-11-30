@@ -13,6 +13,7 @@ use TYPO3\Flow\Exception;
 /**
  * Class PaymentService
  *
+ * @Flow\Scope("singleton")
  * @package UpAssist\Payments\Mollie\Service
  * @author Henjo Hoeksma <henjo@upassist.com>
  */
@@ -29,10 +30,23 @@ class PaymentService
      * Mollie API Key
      *
      * @Flow\Inject(setting="apiKey", package="UpAssist.Payments.Mollie")
-     *
      * @var string
      */
     protected $apiKey;
+
+    /**
+     * Default description
+     * @Flow\Inject(setting="default.description", package="UpAssist.Payments.Mollie")
+     * @var string
+     */
+    protected $defaultDescription;
+
+    /**
+     * Default redirectUrl
+     * @Flow\Inject(setting="default.redirectUrl", package="UpAssist.Payments.Mollie")
+     * @var string
+     */
+    protected $defaultRedirectUrl;
 
     /**
      * PaymentService constructor.
@@ -40,11 +54,6 @@ class PaymentService
     public function __construct()
     {
         $this->mollie = new \Mollie_API_Client();
-        if ($this->apiKey) {
-            $this->mollie->setApiKey($this->apiKey);
-        } else {
-            throw new Exception('ApiKey is not set', 1448890896);
-        }
     }
 
     /**
@@ -58,8 +67,23 @@ class PaymentService
      * @throws Exception
      */
     public function createPayment(
-        $amount, $description, $redirectUrl, $persistPayment = false
+        $amount, $description = null, $redirectUrl = null, $persistPayment = false
     ) {
+
+        if ($description === null) {
+            $description = $this->defaultDescription;
+        }
+
+        if ($redirectUrl === null) {
+            $redirectUrl = $this->defaultRedirectUrl;
+        }
+
+        if ($this->apiKey) {
+            $this->mollie->setApiKey($this->apiKey);
+        } else {
+            throw new Exception('ApiKey is not set', 1448890896);
+        }
+
         $paymentData = [
             'amount' => $amount,
             'description' => $description,
@@ -96,7 +120,7 @@ class PaymentService
      * @return mixed
      */
     public function getPaymentLink(
-        $amount, $description = '', $redirectUrl = '', $persistPayment = false
+        $amount, $description = null, $redirectUrl = null, $persistPayment = false
     ) {
         try {
             $payment = $this->createPayment(

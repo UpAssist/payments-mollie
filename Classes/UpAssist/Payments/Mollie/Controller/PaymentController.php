@@ -23,17 +23,30 @@ class PaymentController extends ActionController
     /**
      * Create a payment
      *
-     * @param $amount
+     * @api
+     * @param float $amount
      * @param string $description
      * @param string $redirectUrl
-     * @param bool|false $persistPayment
-     * @return mixed
+     * @param boolean $persistPayment
+     * @return string
      */
-    public function create(
-        $amount, $description = '', $redirectUrl = '', $persistPayment = false
+    public function createAction(
+        $amount, $description = null, $redirectUrl = null, $persistPayment = false
     ) {
+        if ($redirectUrl === null) {
+            $redirectUrl =  $this->uriBuilder
+                ->setCreateAbsoluteUri(true)->uriFor('success');
+        }
         return $this->paymentService->getPaymentLink(
             $amount, $description, $redirectUrl, $persistPayment
         );
+    }
+
+    /**
+     * @return boolean
+     */
+    public function successAction()
+    {
+        return true;
     }
 }
