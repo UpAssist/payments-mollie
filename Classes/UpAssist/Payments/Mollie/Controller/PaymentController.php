@@ -2,6 +2,7 @@
 namespace UpAssist\Payments\Mollie\Controller;
 
 use TYPO3\Flow\Annotations as Flow;
+use TYPO3\Flow\Error\Message;
 use TYPO3\Flow\Mvc\Controller\ActionController;
 use UpAssist\Payments\Mollie\Service\PaymentService;
 
@@ -63,6 +64,13 @@ class PaymentController extends ActionController
      */
     public function successAction()
     {
-        return true;
+        $this->flashMessageContainer->addMessage(
+            new Message(
+                $message = 'Payment was successful',
+                $code = null,
+                $arguments = [],
+                $severity = Message::SEVERITY_OK
+            )
+        );
     }
 }
