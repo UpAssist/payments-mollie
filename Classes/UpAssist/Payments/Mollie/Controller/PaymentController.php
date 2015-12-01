@@ -31,14 +31,30 @@ class PaymentController extends ActionController
      * @return string
      */
     public function createAction(
-        $amount, $description = null, $redirectUrl = null, $persistPayment = false
+        $amount = null,
+        $description = null,
+        $redirectUrl = null,
+        $persistPayment = false
     ) {
+        $payment = $this->request->hasArgument('payment')
+            ? $this->request->getArgument('payment')
+            : null;
+        if ($payment) {
+            $amount = !is_array($payment['amount'])
+                ? $payment['amount']
+                : $payment['amount'][0] . '.' . $payment['amount'][1];
+            $description = isset($payment['description'])
+                ? $payment['description']
+                : $description;
+        }
         if ($redirectUrl === null) {
             $redirectUrl =  $this->uriBuilder
                 ->setCreateAbsoluteUri(true)->uriFor('success');
         }
-        return $this->paymentService->getPaymentLink(
-            $amount, $description, $redirectUrl, $persistPayment
+        $this->redirectToUri(
+            $this->paymentService->getPaymentLink(
+                $amount, $description, $redirectUrl, $persistPayment
+            )
         );
     }
 

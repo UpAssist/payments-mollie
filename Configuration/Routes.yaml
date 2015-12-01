@@ -6,5 +6,5 @@
     '@controller': 'Payment'
     '@action': 'create'
     '@format': 'html'
-  httpMethods: ['GET']
+  httpMethods: ['GET', 'POST']
   appendExceedingArguments: TRUE
