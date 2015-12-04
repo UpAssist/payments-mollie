@@ -47,6 +47,9 @@ class PaymentController extends ActionController
             $description = isset($payment['description'])
                 ? $payment['description']
                 : $description;
+            $redirectUrl = isset($payment['redirectUrl'])
+                ? $payment['redirectUrl']
+                : $redirectUrl;
         }
         if ($redirectUrl === null) {
             $redirectUrl =  $this->uriBuilder
