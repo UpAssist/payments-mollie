@@ -41,9 +41,13 @@ class PaymentController extends ActionController
             ? $this->request->getArgument('payment')
             : null;
         if ($payment) {
-            $amount = !is_array($payment['amount'])
-                ? $payment['amount']
-                : $payment['amount'][0] . '.' . $payment['amount'][1];
+            if (!is_array($payment['amount'])) {
+                // If a comma is found, replace it by a dot
+                $amount = str_replace(',', '.', $payment['amount']);
+            } else {
+                $amount = $payment['amount'][0] . '.' . $payment['amount'][1];
+            }
+
             $description = isset($payment['description'])
                 ? $payment['description']
                 : $description;
