@@ -1,9 +1,9 @@
 {
     "name": "upassist/payments-mollie",
-    "type": "typo3-flow-package",
+    "type": "neos-package",
     "description": "Add description here",
     "require": {
-        "typo3/neos": "*",
+        "neos/neos": "*",
         "mollie/mollie-api-php": "1.2.x"
     },
     "autoload": {
