@@ -2,7 +2,7 @@
 namespace UpAssist\Payments\Mollie\Controller;
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Error\Message;
+use Neos\Error\Messages\Message;
 use Neos\Flow\Mvc\Controller\ActionController;
 use UpAssist\Payments\Mollie\Service\PaymentService;
 
