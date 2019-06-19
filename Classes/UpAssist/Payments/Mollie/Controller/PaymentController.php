@@ -1,9 +1,9 @@
 <?php
 namespace UpAssist\Payments\Mollie\Controller;
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Error\Message;
-use TYPO3\Flow\Mvc\Controller\ActionController;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Error\Message;
+use Neos\Flow\Mvc\Controller\ActionController;
 use UpAssist\Payments\Mollie\Service\PaymentService;
 
 /**

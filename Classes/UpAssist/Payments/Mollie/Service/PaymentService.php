@@ -7,8 +7,8 @@ namespace UpAssist\Payments\Mollie\Service;
  */
 
 use \Mollie_API_Client;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Exception;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Exception;
 
 /**
  * Class PaymentService
