@@ -7,6 +7,8 @@ namespace UpAssist\Payments\Mollie\Service;
  */
 
 use \Mollie_API_Client;
+use Mollie_API_Exception;
+use Mollie_API_Object_Payment;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Exception;
 
@@ -22,28 +24,28 @@ class PaymentService
     /**
      * Mollie API Client
      *
-     * @var \Mollie_API_Client
+     * @var Mollie_API_Client
      */
     protected $mollie;
 
     /**
      * Mollie API Key
      *
-     * @Flow\Inject(setting="apiKey", package="UpAssist.Payments.Mollie")
+     * @Flow\InjectConfiguration(path="apiKey", package="UpAssist.Payments.Mollie")
      * @var string
      */
     protected $apiKey;
 
     /**
      * Default description
-     * @Flow\Inject(setting="default.description", package="UpAssist.Payments.Mollie")
+     * @Flow\InjectConfiguration(path="default.description", package="UpAssist.Payments.Mollie")
      * @var string
      */
     protected $defaultDescription;
 
     /**
      * Default redirectUrl
-     * @Flow\Inject(setting="default.redirectUrl", package="UpAssist.Payments.Mollie")
+     * @Flow\InjectConfiguration(path="default.redirectUrl", package="UpAssist.Payments.Mollie")
      * @var string
      */
     protected $defaultRedirectUrl;
@@ -53,7 +55,7 @@ class PaymentService
      */
     public function __construct()
     {
-        $this->mollie = new \Mollie_API_Client();
+        $this->mollie = new Mollie_API_Client();
     }
 
     /**
@@ -63,8 +65,9 @@ class PaymentService
      * @param string $description
      * @param string $redirectUrl
      * @param boolean $persistPayment
-     * @return \Mollie_API_Object_Payment
+     * @return Mollie_API_Object_Payment
      * @throws Exception
+     * @throws Mollie_API_Exception
      */
     public function createPayment(
         $amount, $description = null, $redirectUrl = null, $persistPayment = false

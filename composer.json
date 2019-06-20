@@ -7,8 +7,8 @@
         "mollie/mollie-api-php": "1.2.x"
     },
     "autoload": {
-        "psr-0": {
-            "UpAssist\\Payments\\Mollie": "Classes"
+        "psr-4": {
+            "UpAssist\\Payments\\Mollie\\": "Classes"
         }
     },
     "extra": {
