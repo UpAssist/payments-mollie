@@ -4,7 +4,7 @@
     "description": "Add description here",
     "require": {
         "neos/neos": "*",
-        "mollie/mollie-api-php": "1.2.x"
+        "mollie/mollie-api-php": "1.*"
     },
     "autoload": {
         "psr-4": {
