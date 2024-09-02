@@ -6,9 +6,9 @@ namespace UpAssist\Payments\Mollie\Service;
  *
  */
 
-use \Mollie_API_Client;
-use Mollie_API_Exception;
-use Mollie_API_Object_Payment;
+use Mollie\Api\MollieApiClient;
+use Mollie\Api\Exceptions\ApiException;
+use Mollie\Api\Resources\Payment;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Exception;
 
@@ -24,7 +24,7 @@ class PaymentService
     /**
      * Mollie API Client
      *
-     * @var Mollie_API_Client
+     * @var MollieApiClient
      */
     protected $mollie;
 
@@ -55,7 +55,7 @@ class PaymentService
      */
     public function __construct()
     {
-        $this->mollie = new Mollie_API_Client();
+        $this->mollie = new MollieApiClient();
     }
 
     /**
@@ -65,9 +65,9 @@ class PaymentService
      * @param string $description
      * @param string $redirectUrl
      * @param boolean $persistPayment
-     * @return Mollie_API_Object_Payment
+     * @return Payment
      * @throws Exception
-     * @throws Mollie_API_Exception
+     * @throws ApiException
      */
     public function createPayment(
         $amount, $description = null, $redirectUrl = null, $persistPayment = false
@@ -88,7 +88,10 @@ class PaymentService
         }
 
         $paymentData = [
-            'amount' => $amount,
+            'amount' => [
+                'currency' => 'EUR',
+                'value' => number_format($amount, 2, '.', '')
+            ],
             'description' => $description,
             'redirectUrl' => $redirectUrl
         ];
@@ -96,7 +99,7 @@ class PaymentService
         /**
          * The payment object
          *
-         * @var \Mollie_API_Object_Payment $payment
+         * @var Payment $payment
          */
         $payment = $this->mollie->payments->create($paymentData);
 
@@ -110,6 +113,8 @@ class PaymentService
                 1448891346
             );
         }
+
+        return $payment;
     }
 
 
@@ -130,7 +135,7 @@ class PaymentService
                 $amount, $description, $redirectUrl, $persistPayment
             );
 
-            return $payment->getPaymentUrl();
+            return $payment->getCheckoutUrl();
 
         } catch (Exception $e) {
             throw new $e('Something went wrong creating a payment url', 1448892637);
